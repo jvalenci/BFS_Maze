@@ -10,7 +10,7 @@ void Maze2::find_exit()
   Position nbr, current;
   direction d;
   int count = 0;
-
+  //bool foundExit = false;
   
   Q.push(start);
   M[start.row][start.col] = VISITED;
@@ -35,6 +35,20 @@ void Maze2::find_exit()
 	  current = Q.front();
 	  Q.pop();
 
+	  for (d = DOWN; d != NONE; d = next_direction(d)) {
+		  nbr = current.Neighbor(d);
+		  if (M[nbr.row][nbr.col] == OPEN) {
+			  M[nbr.row][nbr.col] = VISITED;
+			  pred[nbr.row][nbr.col] = current;
+
+			  if (nbr == exitpos) {
+				  //foundExit = true;
+				  return;
+			  }
+
+			  Q.push(nbr);
+		  }
+	  }
 
   }
 }
